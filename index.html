@@ -261,19 +261,37 @@
       }
     }
 
-    function sendData() {
+function sendData() {
       if (!selectedStudentName) {
         alert("Prosím, nejprve klikni na své jméno nahoře!");
         return;
       }
-      let score = document.getElementById('progressRange').value;
-      alert(`Skvělé ${selectedStudentName}! Tvoje hodnocení (${score}/10) bylo uloženo.`);
       
-      // Reset formuláře pro další dítě
-      document.querySelectorAll('.student-card').forEach(card => card.classList.remove('selected'));
-      selectedStudentName = "";
-      document.getElementById('progressRange').value = 5;
-      updateEmoji(5);
+      // Vložte vaši URL adresu z Google Apps Scriptu mezi uvozovky níže:
+      const scriptURL = 'https://script.google.com/macros/s/AKfycbwiSnvvYryR6exFueDasruw0babiRjFbk-ZHocwnB-E9CrTG0_3DP5GMQ_fWzUZnTZTZQ/exec';
+
+      let scoreVal = document.getElementById('progressRange').value;
+      let topicText = document.querySelector('.section-box h2').innerText;
+
+      fetch(scriptURL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: selectedStudentName,
+          topic: topicText,
+          score: scoreVal + '/10'
+        })
+      })
+      .then(() => {
+        alert(`Skvělé ${selectedStudentName}! Tvoje hodnocení bylo uloženo.`);
+        
+        document.querySelectorAll('.student-card').forEach(card => card.classList.remove('selected'));
+        selectedStudentName = "";
+        document.getElementById('progressRange').value = 5;
+        updateEmoji(5);
+      })
+      .catch(error => alert("Chyba při odesílání: " + error));
     }
 
     // Inicializace výchozího stavu
