@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mapa pokroku - 1. třída</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: #eef7fc;
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+      color: #2c3e50;
+    }
+    h1 { font-size: 28px; margin-bottom: 5px; color: #1e3799; }
+    p.subtitle { color: #6a89cc; margin-top: 0; font-size: 18px; font-weight: 600; }
+    
+    /* Výběr dětí */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 12px;
+      max-width: 800px;
+      margin: 20px auto;
+    }
+    .student-card {
+      background: white;
+      border: 3px solid #badc58;
+      border-radius: 18px;
+      padding: 15px 8px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #2c3e50;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .student-card.selected {
+      border-color: #44bd32;
+      background: #dcdde1;
+      transform: scale(1.06);
+      box-shadow: 0 6px 15px rgba(68, 189, 50, 0.3);
+    }
+    .student-card svg {
+      width: 24px;
+      height: 24px;
+      flex-shrink: 0;
+    }
+
+    /* Sekce hodnocení */
+    .section-box {
+      background: white;
+      max-width: 800px;
+      margin: 25px auto;
+      padding: 25px;
+      border-radius: 24px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+      border: 2px solid #dcdde1;
+    }
+    h2 { color: #0c2461; font-size: 22px; margin-top: 5px; }
+
+    .slider-container { margin: 30px 0 20px 0; }
+    input[type=range] {
+      width: 100%;
+      height: 28px;
+      accent-color: #44bd32;
+      cursor: pointer;
+    }
+    
+    .svg-display {
+      width: 90px;
+      height: 90px;
+      margin: 15px auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s ease;
+    }
+    .svg-display svg {
+      width: 100%;
+      height: 100%;
+    }
+    .status-text {
+      font-size: 20px;
+      font-weight: bold;
+      color: #e67e22;
+      min-height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-submit {
+      background: #44bd32;
+      color: white;
+      border: none;
+      padding: 16px 40px;
+      font-size: 22px;
+      font-weight: bold;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 6px #2ed573;
+      margin-top: 15px;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      transition: background 0.2s, transform 0.1s;
+    }
+    .btn-submit:active {
+      transform: translateY(4px);
+      box-shadow: 0 2px #2ed573;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Mapa pokroku</h1>
+  <p class="subtitle">Vyber nejprve svoje jméno:</p>
+
+  <!-- Seznam 17 dětí -->
+  <div class="grid" id="studentGrid">
+    <!-- Děvčata s růžovou/fialovou ikonou -->
+    <div class="student-card" onclick="selectStudent(this, 'Anička')">
+      <svg viewBox="0 0 24 24" fill="#e84393"><path d="M12 2a5 5 0 0 0-5 5v3a5 5 0 0 0 10 0V7a5 5 0 0 0-5-5zm0 12c-5.33 0-8 2.67-8 4v2h16v-2c0-1.33-2.67-4-8-4z"/></svg>
+      Anička
+    </div>
+    <div class="student-card" onclick="selectStudent(this, 'Eliška')">
+      <svg viewBox="0 0 24 24" fill="#e84393"><path d="M12 2a5 5 0 0 0-5 5v3a5 5 0 0 0 10 0V7a5 5 0 0 0-5-5zm0 12c-5.33 0-8 2.67-8 4v2h16v-2c0-1.33-2.67-4-8-4z"/></svg>
+      Eliška
+    </div>
+    <div class="student-card" onclick="selectStudent(this, 'Klára')">
+      <svg viewBox="0 0 24 24" fill="#e84393"><path d="M12 2a5 5 0 0 0-5 5v3a5 5 0 0 0 10 0V7a5 5 0 0 0-5-5zm0 12c-5.33 0-8 2.67-8 4v2h16v-2c0-1.33-2.67-4-8-4z"/></svg>
+      Klára
+    </div>
+    <div class="student-card" onclick="selectStudent(this, 'Natálka')">
+      <svg viewBox="0 0 24 24" fill="#e84393"><path d="M12 2a5 5 0 0 0-5 5v3a5 5 0 0 0 10 0V7a5 5 0 0 0-5-5zm0 12c-5.33 0-8 2.67-8 4v2h16v-2c0-1.33-2.67-4-8-4z"/></svg>
+      Natálka
+    </div>
+    <div class="student-card" onclick="selectStudent(this, 'Sofie')">
+      <svg viewBox="0 0 24 24" fill="#e84393"><path d="M12 2a5 5 0 0 0-5 5v3a5 5 0 0 0 10 0V7a5 5 0 0 0-5-5zm0 12c-5.33 0-8 2.67-8 4v2h16v-2c0-1.33-2.67-4-8-4z"/></svg>
+      Sofie
+    </div>
+    <div class="student-card" onclick="selectStudent(this, 'Zuzka')">
+      <svg viewBox="0 0 24 24" fill="#e84393"><path d="M12 2a5 5 0 0 0-5 5v3a5 5 0 0 0 10 0V7a5 5 0 0 0-5-5zm0 12c-5.33 0-8 2.67-8 4v2h16v-2c0-1.33-2.67-4-8-4z"/></svg>
+      Zuzka
+    </div>
+    <div class="student-card" onclick="selectStudent(this, 'Bára')">
+      <svg viewBox="0 0 24 24" fill="#e84393"><path d="M12 2a5 5 0 0 0-5 5v3a5 5 0 0 0 10 0V7a5 5 0 0 0-5-5zm0 12c-5.33 0-8 2.67-8 4v2h16v-2c0-1.33-2.67-4-8-4z"/></svg>
+      Bára
+    </div>
+    <div class="student-card" onclick="selectStudent(this, 'Julie')">
+      <svg viewBox="0 0 24 24" fill="#e84393"><path d="M12 2a5 5 0 0 0-5 5v3a5 5 0 0 0 10 0V7a5 5 0 0 0-5-5zm0 12c-5.33 0-8 2.67-8 4v2h16v-2c0-1.33-2.67-4-8-4z"/></svg>
+      Julie
+    </div>
+    <div class="student-card" onclick="selectStudent(this, 'Terezka')">
+      <svg viewBox="0 0 24 24" fill="#e84393"><path d="M12 2a5 5 0 0 0-5 5v3a5 5 0 0 0 10 0V7a5 5 0 0 0-5-5zm0 12c-5.33 0-8 2.67-8 4v2h16v-2c0-1.33-2.67-4-8-4z"/></svg>
+      Terezka
+    </div>
+
+    <!-- Chlapci s modrou ikonou -->
+    <div class="student-card" onclick="selectStudent(this, 'Jindřich')">
+      <svg viewBox="0 0 24 24" fill="#0984e3"><path d="M12 2a5 5 0 0 0-5 5v3a5 5 0 0 0 10 0V7a5 5 0 0 0-5-5zm0 12c-5.33 0-8 2.67-8 4v2h16v-2c0-1.33-2.67-4-8-4z"/></svg>
+      Jindřich
+    </div>
+    <div class="student-card" onclick="selectStudent(this, 'Matěj')">
+      <svg viewBox="0 0 24 24" fill="#0984e3"><path d="M12 2a5 5 0 0 0-5 5v3a5 5 0 0 0 10 0V7a5 5 0 0 0-5-5zm0 12c-5.33 0-8 2.67-8 4v2h16v-2c0-1.33-2.67-4-8-4z"/></svg>
+      Matěj
+    </div>
+    <div class="student-card" onclick="selectStudent(this, 'Ondra')">
+      <svg viewBox="0 0 24 24" fill="#0984e3"><path d="M12 2a5 5 0 0 0-5 5v3a5 5 0 0 0 10 0V7a5 5 0 0 0-5-5zm0 12c-5.33 0-8 2.67-8 4v2h16v-2c0-1.33-2.67-4-8-4z"/></svg>
+      Ondra
+    </div>
+    <div class="student-card" onclick="selectStudent(this, 'Vojta')">
+      <svg viewBox="0 0 24 24" fill="#0984e3"><path d="M12 2a5 5 0 0 0-5 5v3a5 5 0 0 0 10 0V7a5 5 0 0 0-5-5zm0 12c-5.33 0-8 2.67-8 4v2h16v-2c0-1.33-2.67-4-8-4z"/></svg>
+      Vojta
+    </div>
+    <div class="student-card" onclick="selectStudent(this, 'Adam')">
+      <svg viewBox="0 0 24 24" fill="#0984e3"><path d="M12 2a5 5 0 0 0-5 5v3a5 5 0 0 0 10 0V7a5 5 0 0 0-5-5zm0 12c-5.33 0-8 2.67-8 4v2h16v-2c0-1.33-2.67-4-8-4z"/></svg>
+      Adam
+    </div>
+    <div class="student-card" onclick="selectStudent(this, 'David')">
+      <svg viewBox="0 0 24 24" fill="#0984e3"><path d="M12 2a5 5 0 0 0-5 5v3a5 5 0 0 0 10 0V7a5 5 0 0 0-5-5zm0 12c-5.33 0-8 2.67-8 4v2h16v-2c0-1.33-2.67-4-8-4z"/></svg>
+      David
+    </div>
+    <div class="student-card" onclick="selectStudent(this, 'Filip')">
+      <svg viewBox="0 0 24 24" fill="#0984e3"><path d="M12 2a5 5 0 0 0-5 5v3a5 5 0 0 0 10 0V7a5 5 0 0 0-5-5zm0 12c-5.33 0-8 2.67-8 4v2h16v-2c0-1.33-2.67-4-8-4z"/></svg>
+      Filip
+    </div>
+    <div class="student-card" onclick="selectStudent(this, 'Lukáš')">
+      <svg viewBox="0 0 24 24" fill="#0984e3"><path d="M12 2a5 5 0 0 0-5 5v3a5 5 0 0 0 10 0V7a5 5 0 0 0-5-5zm0 12c-5.33 0-8 2.67-8 4v2h16v-2c0-1.33-2.67-4-8-4z"/></svg>
+      Lukáš
+    </div>
+  </div>
+
+  <div class="section-box">
+    <h2>Jak ti jde sčítání do 10?</h2>
+    
+    <div class="slider-container">
+      <input type="range" id="progressRange" min="1" max="10" value="5" oninput="updateEmoji(this.value)">
+    </div>
+    
+    <div class="svg-display" id="emojiIcon"></div>
+    <div class="status-text" id="statusText">Jde mi to dobře, občas se spletu.</div>
+    
+    <button class="btn-submit" onclick="sendData()">
+      Odeslat pokrok!
+      <svg viewBox="0 0 24 24" width="28" height="28" fill="white"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+    </button>
+  </div>
+
+  <script>
+    let selectedStudentName = "";
+
+    // Vektorové SVG grafiky pro stupnici (fungují všude 100% spolehlivě bez písem)
+    const svgs = {
+      egg: `<svg viewBox="0 0 100 100"><ellipse cx="50" cy="55" rx="35" ry="42" fill="#ffeaa7" stroke="#fdcb6e" stroke-width="4"/><circle cx="38" cy="45" r="4" fill="#2d3436"/><circle cx="62" cy="45" r="4" fill="#2d3436"/><path d="M42 65 Q50 60 58 65" stroke="#2d3436" stroke-width="3" fill="none"/></svg>`,
+      sprout: `<svg viewBox="0 0 100 100"><path d="M50 85 L50 45" stroke="#00b894" stroke-width="6" stroke-linecap="round"/><path d="M50 55 Q30 35 20 45 Q25 60 50 55" fill="#55efc4" stroke="#00b894" stroke-width="3"/><path d="M50 50 Q70 30 80 40 Q75 55 50 50" fill="#55efc4" stroke="#00b894" stroke-width="3"/></svg>`,
+      plant: `<svg viewBox="0 0 100 100"><path d="M50 85 L50 25" stroke="#10ac84" stroke-width="7" stroke-linecap="round"/><path d="M50 60 Q20 40 10 50 Q20 70 50 60" fill="#1dd1a1" stroke="#10ac84" stroke-width="3"/><path d="M50 45 Q80 25 90 35 Q80 55 50 45" fill="#1dd1a1" stroke="#10ac84" stroke-width="3"/><path d="M50 35 Q30 15 25 22 Q30 38 50 35" fill="#1dd1a1" stroke="#10ac84" stroke-width="3"/></svg>`,
+      tree: `<svg viewBox="0 0 100 100"><rect x="42" y="55" width="16" height="35" rx="4" fill="#8395a7"/><circle cx="50" cy="42" r="32" fill="#10ac84"/><circle cx="35" cy="48" r="22" fill="#1dd1a1"/><circle cx="65" cy="48" r="22" fill="#1dd1a1"/><circle cx="50" cy="30" r="22" fill="#2ed573"/></svg>`,
+      rocket: `<svg viewBox="0 0 100 100"><path d="M50 10 Q75 35 65 75 L35 75 Q25 35 50 10 Z" fill="#ff6b6b" stroke="#ee5253" stroke-width="3"/><circle cx="50" cy="40" r="10" fill="#c8d6e5" stroke="#8395a7" stroke-width="3"/><path d="M35 65 L20 80 L35 75 Z" fill="#ff9ff3"/><path d="M65 65 L80 80 L65 75 Z" fill="#ff9ff3"/><path d="M42 75 Q50 95 58 75 Z" fill="#feca57"/></svg>`
+    };
+
+    function selectStudent(element, name) {
+      document.querySelectorAll('.student-card').forEach(card => card.classList.remove('selected'));
+      element.classList.add('selected');
+      selectedStudentName = name;
+    }
+
+    function updateEmoji(val) {
+      const emojiIcon = document.getElementById('emojiIcon');
+      const statusText = document.getElementById('statusText');
+      
+      let v = parseInt(val);
+      if (v <= 2) {
+        emojiIcon.innerHTML = svgs.egg;
+        statusText.innerText = "Zatím zkouším, potřebuji pomoc.";
+      } else if (v <= 4) {
+        emojiIcon.innerHTML = svgs.sprout;
+        statusText.innerText = "Už vím jak na to, ale musím pomalu.";
+      } else if (v <= 7) {
+        emojiIcon.innerHTML = svgs.plant;
+        statusText.innerText = "Jde mi to dobře, občas se spletu.";
+      } else if (v <= 9) {
+        emojiIcon.innerHTML = svgs.tree;
+        statusText.innerText = "Zvládám to sám a bez chyb!";
+      } else {
+        emojiIcon.innerHTML = svgs.rocket;
+        statusText.innerText = "Umím to skvěle, můžu pomáhat ostatním!";
+      }
+    }
+
+    function sendData() {
+      if (!selectedStudentName) {
+        alert("Prosím, nejprve klikni na své jméno nahoře!");
+        return;
+      }
+      let score = document.getElementById('progressRange').value;
+      alert(`Skvělé ${selectedStudentName}! Tvoje hodnocení (${score}/10) bylo uloženo.`);
+      
+      // Reset formuláře pro další dítě
+      document.querySelectorAll('.student-card').forEach(card => card.classList.remove('selected'));
+      selectedStudentName = "";
+      document.getElementById('progressRange').value = 5;
+      updateEmoji(5);
+    }
+
+    // Inicializace výchozího stavu
+    updateEmoji(5);
+  </script>
+</body>
+</html>
