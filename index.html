@@ -113,11 +113,12 @@
     .teacher-box {
       background-color: #e3f2fd;
       border: 2px dashed #64b5f6;
-      border-radius: 12px;
-      padding: 10px;
-      margin-bottom: 20px;
+      border-radius: 10px;
+      padding: 8px;
+      margin-top: 10px;
       font-weight: bold;
       color: #1976d2;
+      font-size: 0.95rem;
     }
 
     input[type=range] {
@@ -233,6 +234,7 @@
       <div class="emoji-display" id="emojiIcon1"></div>
       <div class="status-text" id="statusText1">Počítám na prstech a potřebuji pomoc učitele.</div>
       <input type="range" id="progressRange1" min="1" max="10" value="5" oninput="updateEmoji1(this.value)">
+      <div class="teacher-box" id="teacherDisplay1">Hodnocení učitele: Vyber žáka nahoře</div>
     </div>
 
     <!-- 2. KRITÉRIUM: PLYNULOST -->
@@ -240,11 +242,7 @@
       <div class="criterion-title">2. Jak plynule mi to jde?</div>
       <div class="status-text" id="statusText2">Počítám plynule, ale občas musím zastavit.</div>
       <input type="range" id="progressRange2" min="1" max="10" value="5" oninput="updateEmoji2(this.value)">
-    </div>
-
-    <!-- ZOBRAZENÍ HODNOCENÍ UČITELE -->
-    <div class="teacher-box" id="teacherDisplay">
-      Hodnocení učitele: Vyber žáka nahoře
+      <div class="teacher-box" id="teacherDisplay2">Hodnocení učitele: Vyber žáka nahoře</div>
     </div>
 
     <button class="btn-submit" onclick="sendData()">Uložit moji odpověď</button>
@@ -252,7 +250,8 @@
 
   <script>
     let selectedStudentName = "";
-    let currentTeacherScore = "–";
+    let currentTeacherScore1 = "–";
+    let currentTeacherScore2 = "–";
     
     // VAŠE URL ADRESA Z GOOGLE APPS SCRIPTU:
     const scriptURL = 'https://script.google.com/macros/s/AKfycbwiSnvvYryR6exFueDasruw0babiRjFbk-ZHocwnB-E9CrTG0_3DP5GMQ_fWzUZnTZTZQ/exec';
@@ -270,17 +269,23 @@
       element.classList.add('selected');
       selectedStudentName = name;
       
-      document.getElementById('teacherDisplay').innerText = "Načítám hodnocení učitele...";
+      document.getElementById('teacherDisplay1').innerText = "Načítám...";
+      document.getElementById('teacherDisplay2').innerText = "Načítám...";
 
       fetch(`${scriptURL}?name=${encodeURIComponent(name)}`)
         .then(res => res.json())
         .then(data => {
-          currentTeacherScore = data.teacherScore || "Nezadáno";
-          document.getElementById('teacherDisplay').innerText = `Hodnocení učitele pro ${name}: ${currentTeacherScore}/10`;
+          currentTeacherScore1 = data.teacherScore1 || "Nezadáno";
+          currentTeacherScore2 = data.teacherScore2 || "Nezadáno";
+          
+          document.getElementById('teacherDisplay1').innerText = `Učitel (Jak počítám): ${currentTeacherScore1}/10`;
+          document.getElementById('teacherDisplay2').innerText = `Učitel (Plynulost): ${currentTeacherScore2}/10`;
         })
         .catch(() => {
-          currentTeacherScore = "–";
-          document.getElementById('teacherDisplay').innerText = `Hodnocení učitele: Nezadáno`;
+          currentTeacherScore1 = "–";
+          currentTeacherScore2 = "–";
+          document.getElementById('teacherDisplay1').innerText = `Učitel: Nezadáno`;
+          document.getElementById('teacherDisplay2').innerText = `Učitel: Nezadáno`;
         });
     }
 
@@ -339,35 +344,35 @@
       formData.append('topic', topicText);
       formData.append('studentScore1', scoreVal1);
       formData.append('studentScore2', scoreVal2);
-      formData.append('teacherScore', currentTeacherScore);
+      formData.append('teacherScore1', currentTeacherScore1);
+      formData.append('teacherScore2', currentTeacherScore2);
 
       fetch(scriptURL, {
         method: 'POST',
         body: formData
       })
       .then(() => {
-        alert(`Skvělé ${selectedStudentName}!\n\nMoje hodnocení:\n1. Jak počítám: ${scoreVal1}/10\n2. Jak plynule: ${scoreVal2}/10\n\nPohled učitele: ${currentTeacherScore}/10`);
+        alert(`Skvělé ${selectedStudentName}!\n\nMoje hodnocení:\n1. Jak počítám: ${scoreVal1}/10\n2. Jak plynule: ${scoreVal2}/10\n\nPohled učitele:\n1. Jak počítám: ${currentTeacherScore1}/10\n2. Jak plynule: ${currentTeacherScore2}/10`);
         
-        document.querySelectorAll('.student-card').forEach(card => card.classList.remove('selected'));
-        selectedStudentName = "";
-        currentTeacherScore = "–";
-        document.getElementById('teacherDisplay').innerText = "Hodnocení učitele: Vyber žáka nahoře";
-        document.getElementById('progressRange1').value = 5;
-        document.getElementById('progressRange2').value = 5;
-        updateEmoji1(5);
-        updateEmoji2(5);
+        resetSelection();
       })
       .catch(error => {
         alert(`Skvělé ${selectedStudentName}!\n\nOdpověď byla uložena.`);
-        document.querySelectorAll('.student-card').forEach(card => card.classList.remove('selected'));
-        selectedStudentName = "";
-        currentTeacherScore = "–";
-        document.getElementById('teacherDisplay').innerText = "Hodnocení učitele: Vyber žáka nahoře";
-        document.getElementById('progressRange1').value = 5;
-        document.getElementById('progressRange2').value = 5;
-        updateEmoji1(5);
-        updateEmoji2(5);
+        resetSelection();
       });
+    }
+
+    function resetSelection() {
+      document.querySelectorAll('.student-card').forEach(card => card.classList.remove('selected'));
+      selectedStudentName = "";
+      currentTeacherScore1 = "–";
+      currentTeacherScore2 = "–";
+      document.getElementById('teacherDisplay1').innerText = "Hodnocení učitele: Vyber žáka nahoře";
+      document.getElementById('teacherDisplay2').innerText = "Hodnocení učitele: Vyber žáka nahoře";
+      document.getElementById('progressRange1').value = 5;
+      document.getElementById('progressRange2').value = 5;
+      updateEmoji1(5);
+      updateEmoji2(5);
     }
 
     updateEmoji1(5);
