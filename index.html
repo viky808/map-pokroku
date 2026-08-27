@@ -252,19 +252,19 @@
       let v = parseInt(val);
       if (v <= 2) {
         emojiIcon.innerHTML = svgs.egg;
-        statusText.innerText = "Zatím zkouším, potřebuji pomoc.";
+        statusText.innerHTML = "<b>🥚 Vajíčko (1-2)</b><br>Počítám na prstech a potřebuji pomoc učitele.";
       } else if (v <= 4) {
         emojiIcon.innerHTML = svgs.sprout;
-        statusText.innerText = "Už vím jak na to, ale musím pomalu.";
-      } else if (v <= 7) {
+        statusText.innerHTML = "<b>🌱 Sazenička (3-4)</b><br>Spočítám to sám, ale musím mít prsty nebo počítadlo.";
+      } else if (v <= 6) {
         emojiIcon.innerHTML = svgs.plant;
-        statusText.innerText = "Jde mi to dobře, občas se spletu.";
+        statusText.innerHTML = "<b>🌿 Rostlinka (5-6)</b><br>Něco už vím z hlavy, u těžších příkladů ještě pomohou prsty.";
       } else if (v <= 8) {
         emojiIcon.innerHTML = svgs.tree;
-        statusText.innerText = "Zvládám to sám a bez chyb!";
+        statusText.innerHTML = "<b>🌳 Strom (7-8)</b><br>Počítám z hlavy bez prstů a téměř bez chyb.";
       } else {
         emojiIcon.innerHTML = svgs.rocket;
-        statusText.innerText = "Umím to skvěle, můžu pomáhat ostatním!";
+        statusText.innerHTML = "<b>🚀 Raketa (9-10)</b><br>Počítám bleskově zpaměti a můžu pomáhat ostatním!";
       }
     }
 
