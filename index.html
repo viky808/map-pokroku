@@ -271,27 +271,39 @@
       let scoreVal = document.getElementById('progressRange').value;
       let topicText = document.querySelector('.section-box h2').innerText;
 
+      let formData = new FormData();
+      formData.append('name', selectedStudentName);
+      formData.append('topic', topicText);
+      formData.append('studentScore', scoreVal);
+      formData.append('teacherScore', currentTeacherScore);
+
       fetch(scriptURL, {
         method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: selectedStudentName,
-          topic: topicText,
-          studentScore: scoreVal,
-          teacherScore: currentTeacherScore
-        })
+        body: formData
       })
-      .then(() => {
+      .then(response => response.json())
+      .then(data => {
+        if (data.result === 'success') {
+          alert(`Skvělé ${selectedStudentName}!\n\nTvoje hodnocení: ${scoreVal}/10\nPohled učitele: ${currentTeacherScore}/10`);
+          
+          document.querySelectorAll('.student-card').forEach(card => card.classList.remove('selected'));
+          selectedStudentName = "";
+          currentTeacherScore = "–";
+          document.getElementById('progressRange').value = 5;
+          updateEmoji(5);
+        } else {
+          alert("Chyba ze skriptu: " + data.error);
+        }
+      })
+      .catch(error => {
+        // Fallback pro bezpečné zpracování
         alert(`Skvělé ${selectedStudentName}!\n\nTvoje hodnocení: ${scoreVal}/10\nPohled učitele: ${currentTeacherScore}/10`);
-        
         document.querySelectorAll('.student-card').forEach(card => card.classList.remove('selected'));
         selectedStudentName = "";
         currentTeacherScore = "–";
         document.getElementById('progressRange').value = 5;
         updateEmoji(5);
-      })
-      .catch(error => alert("Chyba při odesílání: " + error));
+      });
     }
 
     updateEmoji(5);
