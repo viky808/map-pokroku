@@ -245,27 +245,28 @@
         .catch(() => { currentTeacherScore = "–"; });
     }
 
-    function updateEmoji(val) {
+ function updateEmoji(val) {
       const emojiIcon = document.getElementById('emojiIcon');
       const statusText = document.getElementById('statusText');
       
       let v = parseInt(val);
       if (v <= 2) {
         emojiIcon.innerHTML = svgs.egg;
-        statusText.innerHTML = "<b>🥚 Vajíčko</b><br>Počítám na prstech a potřebuji pomoc učitele.";
+        statusText.innerText = "Počítám na prstech a potřebuji pomoc učitele.";
       } else if (v <= 4) {
         emojiIcon.innerHTML = svgs.sprout;
-        statusText.innerHTML = "<b>🌱 Sazenička</b><br>Spočítám to sám, ale musím mít prsty nebo počítadlo.";
+        statusText.innerText = "Spočítám to sám, ale musím mít prsty nebo počítadlo.";
       } else if (v <= 6) {
         emojiIcon.innerHTML = svgs.plant;
-        statusText.innerHTML = "<b>🌿 Rostlinka</b><br>Něco už vím z hlavy, u těžších příkladů ještě pomohou prsty.";
+        statusText.innerText = "Něco už vím z hlavy, u těžších příkladů ještě pomohou prsty.";
       } else if (v <= 8) {
         emojiIcon.innerHTML = svgs.tree;
-        statusText.innerHTML = "<b>🌳 Strom</b><br>Počítám z hlavy bez prstů a téměř bez chyb.";
+        statusText.innerText = "Počítám z hlavy bez prstů a téměř bez chyb.";
       } else {
         emojiIcon.innerHTML = svgs.rocket;
-        statusText.innerHTML = "<b>🚀 Raketa</b><br>Počítám bleskově zpaměti a můžu pomáhat ostatním!";
+        statusText.innerText = "Počítám bleskově zpaměti a můžu pomáhat ostatním!";
       }
+    }
     }
 
     function sendData() {
