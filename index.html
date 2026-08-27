@@ -218,22 +218,17 @@
       
       let count = parseInt(currentConfig.PocetKriterii) || 1;
       for (let i = 1; i <= count; i++) {
-        document.getElementById(`teacherDisplay${i}`).innerText = "Načítám...";
+        document.getElementById(`teacherDisplay${i}`).innerText = "Učitel: Zobrazí se po odeslání 🔒";
       }
 
+      // Načte hodnocení učitele na pozadí, ale NENECHÁ ho hned zobrazit
       fetch(`${scriptURL}?name=${encodeURIComponent(name)}`)
         .then(res => res.json())
         .then(data => {
           teacherScoresData = data.teacherScores || [];
-          for (let i = 1; i <= count; i++) {
-            let score = teacherScoresData[i - 1] || "Nezadáno";
-            document.getElementById(`teacherDisplay${i}`).innerText = `Učitel: ${score}/10`;
-          }
         })
         .catch(() => {
-          for (let i = 1; i <= count; i++) {
-            document.getElementById(`teacherDisplay${i}`).innerText = `Učitel: Nezadáno`;
-          }
+          teacherScoresData = [];
         });
     }
 
@@ -245,9 +240,20 @@
       
       let count = parseInt(currentConfig.PocetKriterii) || 1;
       let scores = [];
+      let summaryText = `Skvělé ${selectedStudentName}!\n\nTvoje odpoved byla ulozena. Zde je srovnání:\n`;
 
       for (let i = 1; i <= count; i++) {
-        scores.push(document.getElementById(`progressRange${i}`).value);
+        let studentVal = document.getElementById(`progressRange${i}`).value;
+        scores.push(studentVal);
+        
+        let teacherVal = teacherScoresData[i - 1] || "Nezadáno";
+        let critTitle = currentConfig[`Kriterium${i}`] || `Kritérium ${i}`;
+        
+        // Odkryjeme hodnocení na stránce
+        document.getElementById(`teacherDisplay${i}`).innerText = `Učitel: ${teacherVal}/10`;
+        
+        // Přidáme do souhrnné hlášky
+        summaryText += `\n${i}. ${critTitle}:\n  • Ty: ${studentVal}/10\n  • Učitel: ${teacherVal}/10`;
       }
 
       let formData = new FormData();
@@ -258,11 +264,11 @@
 
       fetch(scriptURL, { method: 'POST', body: formData })
       .then(() => {
-        alert(`Skvělé ${selectedStudentName}! Odpověď byla úspěšně uložena.`);
+        alert(summaryText);
         resetSelection();
       })
       .catch(() => {
-        alert(`Skvělé ${selectedStudentName}! Odpověď byla uložena.`);
+        alert(summaryText);
         resetSelection();
       });
     }
@@ -270,6 +276,7 @@
     function resetSelection() {
       document.querySelectorAll('.student-card').forEach(card => card.classList.remove('selected'));
       selectedStudentName = "";
+      teacherScoresData = [];
       let count = parseInt(currentConfig.PocetKriterii) || 1;
       for (let i = 1; i <= count; i++) {
         document.getElementById(`teacherDisplay${i}`).innerText = "Hodnocení učitele: Vyber žáka nahoře";
