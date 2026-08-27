@@ -83,7 +83,7 @@
       border: 2px solid #e9ecef;
       border-radius: 15px;
       padding: 15px;
-      margin-bottom: 25px;
+      margin-bottom: 20px;
     }
 
     .criterion-title {
@@ -94,20 +94,30 @@
     }
 
     .emoji-display {
-      width: 90px;
-      height: 90px;
+      width: 80px;
+      height: 80px;
       margin: 0 auto 10px auto;
     }
 
     .status-text {
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       color: #2c3e50;
-      min-height: 45px;
-      margin-bottom: 15px;
+      min-height: 40px;
+      margin-bottom: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
       line-height: 1.3;
+    }
+
+    .teacher-box {
+      background-color: #e3f2fd;
+      border: 2px dashed #64b5f6;
+      border-radius: 12px;
+      padding: 10px;
+      margin-bottom: 20px;
+      font-weight: bold;
+      color: #1976d2;
     }
 
     input[type=range] {
@@ -225,11 +235,16 @@
       <input type="range" id="progressRange1" min="1" max="10" value="5" oninput="updateEmoji1(this.value)">
     </div>
 
-    <!-- 2. KRITÉRIUM: PLYNUOST -->
+    <!-- 2. KRITÉRIUM: PLYNULOST -->
     <div class="criterion-block">
       <div class="criterion-title">2. Jak plynule mi to jde?</div>
       <div class="status-text" id="statusText2">Počítám plynule, ale občas musím zastavit.</div>
       <input type="range" id="progressRange2" min="1" max="10" value="5" oninput="updateEmoji2(this.value)">
+    </div>
+
+    <!-- ZOBRAZENÍ HODNOCENÍ UČITELE -->
+    <div class="teacher-box" id="teacherDisplay">
+      Hodnocení učitele: Vyber žáka nahoře
     </div>
 
     <button class="btn-submit" onclick="sendData()">Uložit moji odpověď</button>
@@ -254,13 +269,19 @@
       document.querySelectorAll('.student-card').forEach(card => card.classList.remove('selected'));
       element.classList.add('selected');
       selectedStudentName = name;
+      
+      document.getElementById('teacherDisplay').innerText = "Načítám hodnocení učitele...";
 
       fetch(`${scriptURL}?name=${encodeURIComponent(name)}`)
         .then(res => res.json())
         .then(data => {
           currentTeacherScore = data.teacherScore || "Nezadáno";
+          document.getElementById('teacherDisplay').innerText = `Hodnocení učitele pro ${name}: ${currentTeacherScore}/10`;
         })
-        .catch(() => { currentTeacherScore = "–"; });
+        .catch(() => {
+          currentTeacherScore = "–";
+          document.getElementById('teacherDisplay').innerText = `Hodnocení učitele: Nezadáno`;
+        });
     }
 
     function updateEmoji1(val) {
@@ -325,11 +346,12 @@
         body: formData
       })
       .then(() => {
-        alert(`Skvělé ${selectedStudentName}!\n\n1. Jak počítám: ${scoreVal1}/10\n2. Jak plynule: ${scoreVal2}/10\nPohled učitele: ${currentTeacherScore}/10`);
+        alert(`Skvělé ${selectedStudentName}!\n\nMoje hodnocení:\n1. Jak počítám: ${scoreVal1}/10\n2. Jak plynule: ${scoreVal2}/10\n\nPohled učitele: ${currentTeacherScore}/10`);
         
         document.querySelectorAll('.student-card').forEach(card => card.classList.remove('selected'));
         selectedStudentName = "";
         currentTeacherScore = "–";
+        document.getElementById('teacherDisplay').innerText = "Hodnocení učitele: Vyber žáka nahoře";
         document.getElementById('progressRange1').value = 5;
         document.getElementById('progressRange2').value = 5;
         updateEmoji1(5);
@@ -340,6 +362,7 @@
         document.querySelectorAll('.student-card').forEach(card => card.classList.remove('selected'));
         selectedStudentName = "";
         currentTeacherScore = "–";
+        document.getElementById('teacherDisplay').innerText = "Hodnocení učitele: Vyber žáka nahoře";
         document.getElementById('progressRange1').value = 5;
         document.getElementById('progressRange2').value = 5;
         updateEmoji1(5);
