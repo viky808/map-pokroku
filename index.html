@@ -14,8 +14,8 @@
       flex-direction: column;
       align-items: center;
     }
-    h1 { color: #2c3e50; margin-bottom: 5px; }
-    .subtitle { color: #7f8c8d; margin-top: 0; margin-bottom: 25px; }
+    h1 { color: #2c3e50; margin-bottom: 5px; text-align: center; }
+    .subtitle { color: #7f8c8d; margin-top: 0; margin-bottom: 25px; text-align: center; }
     
     .section-title {
       width: 100%;
@@ -93,23 +93,6 @@
       margin-bottom: 10px;
     }
 
-    .emoji-display {
-      width: 80px;
-      height: 80px;
-      margin: 0 auto 10px auto;
-    }
-
-    .status-text {
-      font-size: 1.05rem;
-      color: #2c3e50;
-      min-height: 40px;
-      margin-bottom: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      line-height: 1.3;
-    }
-
     .teacher-box {
       background-color: #e3f2fd;
       border: 2px dashed #64b5f6;
@@ -140,6 +123,7 @@
     }
 
     .btn-submit:active { transform: scale(0.98); }
+    .loader { font-size: 1.2rem; color: #7f8c8d; font-style: italic; }
   </style>
 </head>
 <body>
@@ -150,183 +134,107 @@
   <!-- HOLKY -->
   <div class="section-title" style="color: #e84393;">👧 Holky</div>
   <div class="students-grid">
-    <div class="student-card" onclick="selectStudent(this, 'Amálie')">
-      <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Amalie" alt="Amálie">
-      <div class="student-name">Amálie</div>
-    </div>
-    <div class="student-card" onclick="selectStudent(this, 'Anželika')">
-      <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Anzelika" alt="Anželika">
-      <div class="student-name">Anželika</div>
-    </div>
-    <div class="student-card" onclick="selectStudent(this, 'Michaela')">
-      <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Michaela" alt="Michaela">
-      <div class="student-name">Michaela</div>
-    </div>
-    <div class="student-card" onclick="selectStudent(this, 'Monika')">
-      <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Monika" alt="Monika">
-      <div class="student-name">Monika</div>
-    </div>
-    <div class="student-card" onclick="selectStudent(this, 'Laura')">
-      <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Laura" alt="Laura">
-      <div class="student-name">Laura</div>
-    </div>
-    <div class="student-card" onclick="selectStudent(this, 'Sofie')">
-      <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Sofie" alt="Sofie">
-      <div class="student-name">Sofie</div>
-    </div>
-    <div class="student-card" onclick="selectStudent(this, 'Ester')">
-      <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Ester" alt="Ester">
-      <div class="student-name">Ester</div>
-    </div>
+    <div class="student-card" onclick="selectStudent(this, 'Amálie')"><img src="https://api.dicebear.com/7.x/bottts/svg?seed=Amalie"><div class="student-name">Amálie</div></div>
+    <div class="student-card" onclick="selectStudent(this, 'Anželika')"><img src="https://api.dicebear.com/7.x/bottts/svg?seed=Anzelika"><div class="student-name">Anželika</div></div>
+    <div class="student-card" onclick="selectStudent(this, 'Michaela')"><img src="https://api.dicebear.com/7.x/bottts/svg?seed=Michaela"><div class="student-name">Michaela</div></div>
+    <div class="student-card" onclick="selectStudent(this, 'Monika')"><img src="https://api.dicebear.com/7.x/bottts/svg?seed=Monika"><div class="student-name">Monika</div></div>
+    <div class="student-card" onclick="selectStudent(this, 'Laura')"><img src="https://api.dicebear.com/7.x/bottts/svg?seed=Laura"><div class="student-name">Laura</div></div>
+    <div class="student-card" onclick="selectStudent(this, 'Sofie')"><img src="https://api.dicebear.com/7.x/bottts/svg?seed=Sofie"><div class="student-name">Sofie</div></div>
+    <div class="student-card" onclick="selectStudent(this, 'Ester')"><img src="https://api.dicebear.com/7.x/bottts/svg?seed=Ester"><div class="student-name">Ester</div></div>
   </div>
 
   <!-- KLUCI -->
   <div class="section-title" style="color: #0984e3;">👦 Kluci</div>
   <div class="students-grid">
-    <div class="student-card" onclick="selectStudent(this, 'Martin')">
-      <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Martin" alt="Martin">
-      <div class="student-name">Martin</div>
-    </div>
-    <div class="student-card" onclick="selectStudent(this, 'Viktor')">
-      <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Viktor" alt="Viktor">
-      <div class="student-name">Viktor</div>
-    </div>
-    <div class="student-card" onclick="selectStudent(this, 'Kryštof')">
-      <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Krystof" alt="Kryštof">
-      <div class="student-name">Kryštof</div>
-    </div>
-    <div class="student-card" onclick="selectStudent(this, 'Erik')">
-      <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Erik" alt="Erik">
-      <div class="student-name">Erik</div>
-    </div>
-    <div class="student-card" onclick="selectStudent(this, 'Tobiáš')">
-      <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Tobias" alt="Tobiáš">
-      <div class="student-name">Tobiáš</div>
-    </div>
-    <div class="student-card" onclick="selectStudent(this, 'Gregor')">
-      <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Gregor" alt="Gregor">
-      <div class="student-name">Gregor</div>
-    </div>
-    <div class="student-card" onclick="selectStudent(this, 'Daniel')">
-      <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Daniel" alt="Daniel">
-      <div class="student-name">Daniel</div>
-    </div>
-    <div class="student-card" onclick="selectStudent(this, 'Michael')">
-      <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Michael" alt="Michael">
-      <div class="student-name">Michael</div>
-    </div>
-    <div class="student-card" onclick="selectStudent(this, 'Erik S.')">
-      <img src="https://api.dicebear.com/7.x/bottts/svg?seed=ErikS" alt="Erik S.">
-      <div class="student-name">Erik S.</div>
-    </div>
-    <div class="student-card" onclick="selectStudent(this, 'Vojtěch')">
-      <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Vojtech" alt="Vojtěch">
-      <div class="student-name">Vojtěch</div>
-    </div>
+    <div class="student-card" onclick="selectStudent(this, 'Martin')"><img src="https://api.dicebear.com/7.x/bottts/svg?seed=Martin"><div class="student-name">Martin</div></div>
+    <div class="student-card" onclick="selectStudent(this, 'Viktor')"><img src="https://api.dicebear.com/7.x/bottts/svg?seed=Viktor"><div class="student-name">Viktor</div></div>
+    <div class="student-card" onclick="selectStudent(this, 'Kryštof')"><img src="https://api.dicebear.com/7.x/bottts/svg?seed=Krystof"><div class="student-name">Kryštof</div></div>
+    <div class="student-card" onclick="selectStudent(this, 'Erik')"><img src="https://api.dicebear.com/7.x/bottts/svg?seed=Erik"><div class="student-name">Erik</div></div>
+    <div class="student-card" onclick="selectStudent(this, 'Tobiáš')"><img src="https://api.dicebear.com/7.x/bottts/svg?seed=Tobias"><div class="student-name">Tobiáš</div></div>
+    <div class="student-card" onclick="selectStudent(this, 'Gregor')"><img src="https://api.dicebear.com/7.x/bottts/svg?seed=Gregor"><div class="student-name">Gregor</div></div>
+    <div class="student-card" onclick="selectStudent(this, 'Daniel')"><img src="https://api.dicebear.com/7.x/bottts/svg?seed=Daniel"><div class="student-name">Daniel</div></div>
+    <div class="student-card" onclick="selectStudent(this, 'Michael')"><img src="https://api.dicebear.com/7.x/bottts/svg?seed=Michael"><div class="student-name">Michael</div></div>
+    <div class="student-card" onclick="selectStudent(this, 'Erik S.')"><img src="https://api.dicebear.com/7.x/bottts/svg?seed=ErikS"><div class="student-name">Erik S.</div></div>
+    <div class="student-card" onclick="selectStudent(this, 'Vojtěch')"><img src="https://api.dicebear.com/7.x/bottts/svg?seed=Vojtech"><div class="student-name">Vojtěch</div></div>
   </div>
 
   <div class="section-box">
-    <h2>Počítání do 10</h2>
+    <h2 id="subjectTitle">Načítám...</h2>
+    <p id="topicSubtitle" style="color: #7f8c8d;"></p>
     
-    <!-- 1. KRITÉRIUM: METODA -->
-    <div class="criterion-block">
-      <div class="criterion-title">1. Jak počítám?</div>
-      <div class="emoji-display" id="emojiIcon1"></div>
-      <div class="status-text" id="statusText1">Počítám na prstech a potřebuji pomoc učitele.</div>
-      <input type="range" id="progressRange1" min="1" max="10" value="5" oninput="updateEmoji1(this.value)">
-      <div class="teacher-box" id="teacherDisplay1">Hodnocení učitele: Vyber žáka nahoře</div>
-    </div>
+    <div id="criteriaContainer" class="loader">Načítám nastavení z tabulky...</div>
 
-    <!-- 2. KRITÉRIUM: PLYNULOST -->
-    <div class="criterion-block">
-      <div class="criterion-title">2. Jak plynule mi to jde?</div>
-      <div class="status-text" id="statusText2">Počítám plynule, ale občas musím zastavit.</div>
-      <input type="range" id="progressRange2" min="1" max="10" value="5" oninput="updateEmoji2(this.value)">
-      <div class="teacher-box" id="teacherDisplay2">Hodnocení učitele: Vyber žáka nahoře</div>
-    </div>
-
-    <button class="btn-submit" onclick="sendData()">Uložit moji odpověď</button>
+    <button class="btn-submit" onclick="sendData()" style="margin-top:15px;">Uložit moji odpověď</button>
   </div>
 
   <script>
     let selectedStudentName = "";
-    let currentTeacherScore1 = "–";
-    let currentTeacherScore2 = "–";
+    let currentConfig = {};
+    let teacherScoresData = [];
     
     // VAŠE URL ADRESA Z GOOGLE APPS SCRIPTU:
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbwiSnvvYryR6exFueDasruw0babiRjFbk-ZHocwnB-E9CrTG0_3DP5GMQ_fWzUZnTZTZQ/exec';
+    const scriptURL = 'SEM_VLOZTE_VAS_ODKAZ_Z_GOOGLE';
 
-    const svgs = {
-      egg: `<svg viewBox="0 0 100 100"><ellipse cx="50" cy="55" rx="35" ry="42" fill="#ffeaa7" stroke="#fdcb6e" stroke-width="4"/><circle cx="38" cy="45" r="4" fill="#2d3436"/><circle cx="62" cy="45" r="4" fill="#2d3436"/><path d="M42 65 Q50 60 58 65" stroke="#2d3436" stroke-width="3" fill="none"/></svg>`,
-      sprout: `<svg viewBox="0 0 100 100"><path d="M50 85 L50 45" stroke="#00b894" stroke-width="6" stroke-linecap="round"/><path d="M50 55 Q30 35 20 45 Q25 60 50 55" fill="#55efc4" stroke="#00b894" stroke-width="3"/><path d="M50 50 Q70 30 80 40 Q75 55 50 50" fill="#55efc4" stroke="#00b894" stroke-width="3"/></svg>`,
-      plant: `<svg viewBox="0 0 100 100"><path d="M50 85 L50 25" stroke="#10ac84" stroke-width="7" stroke-linecap="round"/><path d="M50 60 Q20 40 10 50 Q20 70 50 60" fill="#1dd1a1" stroke="#10ac84" stroke-width="3"/><path d="M50 45 Q80 25 90 35 Q80 55 50 45" fill="#1dd1a1" stroke="#10ac84" stroke-width="3"/><path d="M50 35 Q30 15 25 22 Q30 38 50 35" fill="#1dd1a1" stroke="#10ac84" stroke-width="3"/></svg>`,
-      tree: `<svg viewBox="0 0 100 100"><rect x="42" y="55" width="16" height="35" rx="4" fill="#8395a7"/><circle cx="50" cy="42" r="32" fill="#10ac84"/><circle cx="35" cy="48" r="22" fill="#1dd1a1"/><circle cx="65" cy="48" r="22" fill="#1dd1a1"/><circle cx="50" cy="30" r="22" fill="#2ed573"/></svg>`,
-      rocket: `<svg viewBox="0 0 100 100"><path d="M50 10 Q75 35 65 75 L35 75 Q25 35 50 10 Z" fill="#ff6b6b" stroke="#ee5253" stroke-width="3"/><circle cx="50" cy="40" r="10" fill="#c8d6e5" stroke="#8395a7" stroke-width="3"/><path d="M35 65 L20 80 L35 75 Z" fill="#ff9ff3"/><path d="M65 65 L80 80 L65 75 Z" fill="#ff9ff3"/><path d="M42 75 Q50 95 58 75 Z" fill="#feca57"/></svg>`
-    };
+    function loadApp() {
+      fetch(scriptURL)
+        .then(res => res.json())
+        .then(data => {
+          currentConfig = data.config || {};
+          renderForm();
+        })
+        .catch(err => {
+          document.getElementById('criteriaContainer').innerHTML = 'Chyba při načítání nastavení.';
+        });
+    }
+
+    function renderForm() {
+      document.getElementById('subjectTitle').innerText = currentConfig.Predmet || 'Hodnocení';
+      document.getElementById('topicSubtitle').innerText = currentConfig.Tema || '';
+      
+      const container = document.getElementById('criteriaContainer');
+      container.innerHTML = '';
+      container.classList.remove('loader');
+
+      let count = parseInt(currentConfig.PocetKriterii) || 1;
+
+      for (let i = 1; i <= count; i++) {
+        let critTitle = currentConfig[`Kriterium${i}`] || `Kritérium ${i}`;
+        
+        let block = document.createElement('div');
+        block.className = 'criterion-block';
+        block.innerHTML = `
+          <div class="criterion-title">${i}. ${critTitle}</div>
+          <input type="range" id="progressRange${i}" min="1" max="10" value="5">
+          <div class="teacher-box" id="teacherDisplay${i}">Hodnocení učitele: Vyber žáka nahoře</div>
+        `;
+        container.appendChild(block);
+      }
+    }
 
     function selectStudent(element, name) {
       document.querySelectorAll('.student-card').forEach(card => card.classList.remove('selected'));
       element.classList.add('selected');
       selectedStudentName = name;
       
-      document.getElementById('teacherDisplay1').innerText = "Načítám...";
-      document.getElementById('teacherDisplay2').innerText = "Načítám...";
+      let count = parseInt(currentConfig.PocetKriterii) || 1;
+      for (let i = 1; i <= count; i++) {
+        document.getElementById(`teacherDisplay${i}`).innerText = "Načítám...";
+      }
 
       fetch(`${scriptURL}?name=${encodeURIComponent(name)}`)
         .then(res => res.json())
         .then(data => {
-          currentTeacherScore1 = data.teacherScore1 || "Nezadáno";
-          currentTeacherScore2 = data.teacherScore2 || "Nezadáno";
-          
-          document.getElementById('teacherDisplay1').innerText = `Učitel (Jak počítám): ${currentTeacherScore1}/10`;
-          document.getElementById('teacherDisplay2').innerText = `Učitel (Plynulost): ${currentTeacherScore2}/10`;
+          teacherScoresData = data.teacherScores || [];
+          for (let i = 1; i <= count; i++) {
+            let score = teacherScoresData[i - 1] || "Nezadáno";
+            document.getElementById(`teacherDisplay${i}`).innerText = `Učitel: ${score}/10`;
+          }
         })
         .catch(() => {
-          currentTeacherScore1 = "–";
-          currentTeacherScore2 = "–";
-          document.getElementById('teacherDisplay1').innerText = `Učitel: Nezadáno`;
-          document.getElementById('teacherDisplay2').innerText = `Učitel: Nezadáno`;
+          for (let i = 1; i <= count; i++) {
+            document.getElementById(`teacherDisplay${i}`).innerText = `Učitel: Nezadáno`;
+          }
         });
-    }
-
-    function updateEmoji1(val) {
-      const emojiIcon = document.getElementById('emojiIcon1');
-      const statusText = document.getElementById('statusText1');
-      
-      let v = parseInt(val);
-      if (v <= 2) {
-        emojiIcon.innerHTML = svgs.egg;
-        statusText.innerText = "Počítám na prstech a potřebuji pomoc učitele.";
-      } else if (v <= 4) {
-        emojiIcon.innerHTML = svgs.sprout;
-        statusText.innerText = "Spočítám to sám, ale musím mít prsty nebo počítadlo.";
-      } else if (v <= 6) {
-        emojiIcon.innerHTML = svgs.plant;
-        statusText.innerText = "Něco už vím z hlavy, u těžších příkladů ještě pomohou prsty.";
-      } else if (v <= 8) {
-        emojiIcon.innerHTML = svgs.tree;
-        statusText.innerText = "Počítám z hlavy bez prstů a téměř bez chyb.";
-      } else {
-        emojiIcon.innerHTML = svgs.rocket;
-        statusText.innerText = "Počítám bleskově zpaměti a můžu pomáhat ostatním!";
-      }
-    }
-
-    function updateEmoji2(val) {
-      const statusText = document.getElementById('statusText2');
-      let v = parseInt(val);
-      
-      if (v <= 2) {
-        statusText.innerText = "Trvá mi to dlouho a často se zaseknu.";
-      } else if (v <= 4) {
-        statusText.innerText = "Musím nad každým číslem hodně přemýšlet.";
-      } else if (v <= 6) {
-        statusText.innerText = "Počítám plynule, ale občas musím na chvíli zastavit.";
-      } else if (v <= 8) {
-        statusText.innerText = "Počítám rychle a bez zaváhání.";
-      } else {
-        statusText.innerText = "Počítám bleskově a bez přemýšlení!";
-      }
     }
 
     function sendData() {
@@ -335,29 +243,26 @@
         return;
       }
       
-      let scoreVal1 = document.getElementById('progressRange1').value;
-      let scoreVal2 = document.getElementById('progressRange2').value;
-      let topicText = document.querySelector('.section-box h2').innerText;
+      let count = parseInt(currentConfig.PocetKriterii) || 1;
+      let scores = [];
+
+      for (let i = 1; i <= count; i++) {
+        scores.push(document.getElementById(`progressRange${i}`).value);
+      }
 
       let formData = new FormData();
       formData.append('name', selectedStudentName);
-      formData.append('topic', topicText);
-      formData.append('studentScore1', scoreVal1);
-      formData.append('studentScore2', scoreVal2);
-      formData.append('teacherScore1', currentTeacherScore1);
-      formData.append('teacherScore2', currentTeacherScore2);
+      formData.append('subject', currentConfig.Predmet || '');
+      formData.append('topic', currentConfig.Tema || '');
+      formData.append('scores', JSON.stringify(scores));
 
-      fetch(scriptURL, {
-        method: 'POST',
-        body: formData
-      })
+      fetch(scriptURL, { method: 'POST', body: formData })
       .then(() => {
-        alert(`Skvělé ${selectedStudentName}!\n\nMoje hodnocení:\n1. Jak počítám: ${scoreVal1}/10\n2. Jak plynule: ${scoreVal2}/10\n\nPohled učitele:\n1. Jak počítám: ${currentTeacherScore1}/10\n2. Jak plynule: ${currentTeacherScore2}/10`);
-        
+        alert(`Skvělé ${selectedStudentName}! Odpověď byla úspěšně uložena.`);
         resetSelection();
       })
-      .catch(error => {
-        alert(`Skvělé ${selectedStudentName}!\n\nOdpověď byla uložena.`);
+      .catch(() => {
+        alert(`Skvělé ${selectedStudentName}! Odpověď byla uložena.`);
         resetSelection();
       });
     }
@@ -365,18 +270,14 @@
     function resetSelection() {
       document.querySelectorAll('.student-card').forEach(card => card.classList.remove('selected'));
       selectedStudentName = "";
-      currentTeacherScore1 = "–";
-      currentTeacherScore2 = "–";
-      document.getElementById('teacherDisplay1').innerText = "Hodnocení učitele: Vyber žáka nahoře";
-      document.getElementById('teacherDisplay2').innerText = "Hodnocení učitele: Vyber žáka nahoře";
-      document.getElementById('progressRange1').value = 5;
-      document.getElementById('progressRange2').value = 5;
-      updateEmoji1(5);
-      updateEmoji2(5);
+      let count = parseInt(currentConfig.PocetKriterii) || 1;
+      for (let i = 1; i <= count; i++) {
+        document.getElementById(`teacherDisplay${i}`).innerText = "Hodnocení učitele: Vyber žáka nahoře";
+        document.getElementById(`progressRange${i}`).value = 5;
+      }
     }
 
-    updateEmoji1(5);
-    updateEmoji2(5);
+    loadApp();
   </script>
 </body>
 </html>
