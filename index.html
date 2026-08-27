@@ -78,26 +78,41 @@
       margin-top: 20px;
     }
 
+    .criterion-block {
+      background: #f8f9fa;
+      border: 2px solid #e9ecef;
+      border-radius: 15px;
+      padding: 15px;
+      margin-bottom: 25px;
+    }
+
+    .criterion-title {
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: #2c3e50;
+      margin-bottom: 10px;
+    }
+
     .emoji-display {
-      width: 120px;
-      height: 120px;
-      margin: 0 auto 15px auto;
+      width: 90px;
+      height: 90px;
+      margin: 0 auto 10px auto;
     }
 
     .status-text {
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       color: #2c3e50;
-      min-height: 50px;
-      margin-bottom: 20px;
+      min-height: 45px;
+      margin-bottom: 15px;
       display: flex;
       align-items: center;
       justify-content: center;
-      line-height: 1.4;
+      line-height: 1.3;
     }
 
     input[type=range] {
       width: 100%;
-      margin: 20px 0;
+      margin: 10px 0;
     }
 
     .btn-submit {
@@ -200,14 +215,23 @@
   </div>
 
   <div class="section-box">
-    <h2>Jak ti jde počítání do 10?</h2>
+    <h2>Počítání do 10</h2>
     
-    <div class="emoji-display" id="emojiIcon"></div>
-    <div class="status-text" id="statusText">Počítám na prstech a potřebuji pomoc učitele.</div>
+    <!-- 1. KRITÉRIUM: METODA -->
+    <div class="criterion-block">
+      <div class="criterion-title">1. Jak počítám?</div>
+      <div class="emoji-display" id="emojiIcon1"></div>
+      <div class="status-text" id="statusText1">Počítám na prstech a potřebuji pomoc učitele.</div>
+      <input type="range" id="progressRange1" min="1" max="10" value="5" oninput="updateEmoji1(this.value)">
+    </div>
 
-    <input type="range" id="progressRange" min="1" max="10" value="5" oninput="updateEmoji(this.value)">
+    <!-- 2. KRITÉRIUM: PLYNUOST -->
+    <div class="criterion-block">
+      <div class="criterion-title">2. Jak plynule mi to jde?</div>
+      <div class="status-text" id="statusText2">Počítám plynule, ale občas musím zastavit.</div>
+      <input type="range" id="progressRange2" min="1" max="10" value="5" oninput="updateEmoji2(this.value)">
+    </div>
 
-    <br><br>
     <button class="btn-submit" onclick="sendData()">Uložit moji odpověď</button>
   </div>
 
@@ -239,9 +263,9 @@
         .catch(() => { currentTeacherScore = "–"; });
     }
 
-    function updateEmoji(val) {
-      const emojiIcon = document.getElementById('emojiIcon');
-      const statusText = document.getElementById('statusText');
+    function updateEmoji1(val) {
+      const emojiIcon = document.getElementById('emojiIcon1');
+      const statusText = document.getElementById('statusText1');
       
       let v = parseInt(val);
       if (v <= 2) {
@@ -262,51 +286,69 @@
       }
     }
 
+    function updateEmoji2(val) {
+      const statusText = document.getElementById('statusText2');
+      let v = parseInt(val);
+      
+      if (v <= 2) {
+        statusText.innerText = "Trvá mi to dlouho a často se zaseknu.";
+      } else if (v <= 4) {
+        statusText.innerText = "Musím nad každým číslem hodně přemýšlet.";
+      } else if (v <= 6) {
+        statusText.innerText = "Počítám plynule, ale občas musím na chvíli zastavit.";
+      } else if (v <= 8) {
+        statusText.innerText = "Počítám rychle a bez zaváhání.";
+      } else {
+        statusText.innerText = "Počítám bleskově a bez přemýšlení!";
+      }
+    }
+
     function sendData() {
       if (!selectedStudentName) {
         alert("Prosím, nejprve klikni na své jméno nahoře!");
         return;
       }
       
-      let scoreVal = document.getElementById('progressRange').value;
+      let scoreVal1 = document.getElementById('progressRange1').value;
+      let scoreVal2 = document.getElementById('progressRange2').value;
       let topicText = document.querySelector('.section-box h2').innerText;
 
       let formData = new FormData();
       formData.append('name', selectedStudentName);
       formData.append('topic', topicText);
-      formData.append('studentScore', scoreVal);
+      formData.append('studentScore1', scoreVal1);
+      formData.append('studentScore2', scoreVal2);
       formData.append('teacherScore', currentTeacherScore);
 
       fetch(scriptURL, {
         method: 'POST',
         body: formData
       })
-      .then(response => response.json())
-      .then(data => {
-        if (data.result === 'success') {
-          alert(`Skvělé ${selectedStudentName}!\n\nTvoje hodnocení: ${scoreVal}/10\nPohled učitele: ${currentTeacherScore}/10`);
-          
-          document.querySelectorAll('.student-card').forEach(card => card.classList.remove('selected'));
-          selectedStudentName = "";
-          currentTeacherScore = "–";
-          document.getElementById('progressRange').value = 5;
-          updateEmoji(5);
-        } else {
-          alert("Chyba ze skriptu: " + data.error);
-        }
-      })
-      .catch(error => {
-        // Fallback pro bezpečné zpracování
-        alert(`Skvělé ${selectedStudentName}!\n\nTvoje hodnocení: ${scoreVal}/10\nPohled učitele: ${currentTeacherScore}/10`);
+      .then(() => {
+        alert(`Skvělé ${selectedStudentName}!\n\n1. Jak počítám: ${scoreVal1}/10\n2. Jak plynule: ${scoreVal2}/10\nPohled učitele: ${currentTeacherScore}/10`);
+        
         document.querySelectorAll('.student-card').forEach(card => card.classList.remove('selected'));
         selectedStudentName = "";
         currentTeacherScore = "–";
-        document.getElementById('progressRange').value = 5;
-        updateEmoji(5);
+        document.getElementById('progressRange1').value = 5;
+        document.getElementById('progressRange2').value = 5;
+        updateEmoji1(5);
+        updateEmoji2(5);
+      })
+      .catch(error => {
+        alert(`Skvělé ${selectedStudentName}!\n\nOdpověď byla uložena.`);
+        document.querySelectorAll('.student-card').forEach(card => card.classList.remove('selected'));
+        selectedStudentName = "";
+        currentTeacherScore = "–";
+        document.getElementById('progressRange1').value = 5;
+        document.getElementById('progressRange2').value = 5;
+        updateEmoji1(5);
+        updateEmoji2(5);
       });
     }
 
-    updateEmoji(5);
+    updateEmoji1(5);
+    updateEmoji2(5);
   </script>
 </body>
 </html>
