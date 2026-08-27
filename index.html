@@ -17,13 +17,22 @@
     h1 { color: #2c3e50; margin-bottom: 5px; }
     .subtitle { color: #7f8c8d; margin-top: 0; margin-bottom: 25px; }
     
+    .section-title {
+      width: 100%;
+      max-width: 600px;
+      text-align: left;
+      margin-top: 15px;
+      margin-bottom: 10px;
+      font-size: 1.3rem;
+    }
+
     .students-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
       gap: 15px;
       width: 100%;
       max-width: 600px;
-      margin-bottom: 30px;
+      margin-bottom: 20px;
     }
     
     .student-card {
@@ -54,6 +63,7 @@
       font-weight: bold;
       color: #34495e;
       margin-top: 5px;
+      font-size: 0.9rem;
     }
 
     .section-box {
@@ -65,6 +75,7 @@
       box-shadow: 0 4px 15px rgba(0,0,0,0.05);
       text-align: center;
       box-sizing: border-box;
+      margin-top: 20px;
     }
 
     .emoji-display {
@@ -81,6 +92,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      line-height: 1.4;
     }
 
     input[type=range] {
@@ -107,20 +119,83 @@
 <body>
 
   <h1>Mapa pokroku</h1>
-  <p class="subtitle">Klikni na svoje jméno a ukáž jak ti to jde!</p>
+  <p class="subtitle">Klikni na svoje jméno a ukaž jak ti to jde!</p>
 
+  <!-- HOLKY -->
+  <div class="section-title" style="color: #e84393;">👧 Holky</div>
   <div class="students-grid">
-    <div class="student-card" onclick="selectStudent(this, 'Anička')">
-      <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Anicka" alt="Anička">
-      <div class="student-name">Anička</div>
+    <div class="student-card" onclick="selectStudent(this, 'Amálie')">
+      <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Amalie" alt="Amálie">
+      <div class="student-name">Amálie</div>
     </div>
-    <div class="student-card" onclick="selectStudent(this, 'Pepíček')">
-      <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Pepicek" alt="Pepíček">
-      <div class="student-name">Pepíček</div>
+    <div class="student-card" onclick="selectStudent(this, 'Anželika')">
+      <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Anzelika" alt="Anželika">
+      <div class="student-name">Anželika</div>
     </div>
-    <div class="student-card" onclick="selectStudent(this, 'Evička')">
-      <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Evicka" alt="Evička">
-      <div class="student-name">Evička</div>
+    <div class="student-card" onclick="selectStudent(this, 'Michaela')">
+      <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Michaela" alt="Michaela">
+      <div class="student-name">Michaela</div>
+    </div>
+    <div class="student-card" onclick="selectStudent(this, 'Monika')">
+      <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Monika" alt="Monika">
+      <div class="student-name">Monika</div>
+    </div>
+    <div class="student-card" onclick="selectStudent(this, 'Laura')">
+      <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Laura" alt="Laura">
+      <div class="student-name">Laura</div>
+    </div>
+    <div class="student-card" onclick="selectStudent(this, 'Sofie')">
+      <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Sofie" alt="Sofie">
+      <div class="student-name">Sofie</div>
+    </div>
+    <div class="student-card" onclick="selectStudent(this, 'Ester')">
+      <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Ester" alt="Ester">
+      <div class="student-name">Ester</div>
+    </div>
+  </div>
+
+  <!-- KLUCI -->
+  <div class="section-title" style="color: #0984e3;">👦 Kluci</div>
+  <div class="students-grid">
+    <div class="student-card" onclick="selectStudent(this, 'Martin')">
+      <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Martin" alt="Martin">
+      <div class="student-name">Martin</div>
+    </div>
+    <div class="student-card" onclick="selectStudent(this, 'Viktor')">
+      <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Viktor" alt="Viktor">
+      <div class="student-name">Viktor</div>
+    </div>
+    <div class="student-card" onclick="selectStudent(this, 'Kryštof')">
+      <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Krystof" alt="Kryštof">
+      <div class="student-name">Kryštof</div>
+    </div>
+    <div class="student-card" onclick="selectStudent(this, 'Erik')">
+      <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Erik" alt="Erik">
+      <div class="student-name">Erik</div>
+    </div>
+    <div class="student-card" onclick="selectStudent(this, 'Tobiáš')">
+      <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Tobias" alt="Tobiáš">
+      <div class="student-name">Tobiáš</div>
+    </div>
+    <div class="student-card" onclick="selectStudent(this, 'Gregor')">
+      <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Gregor" alt="Gregor">
+      <div class="student-name">Gregor</div>
+    </div>
+    <div class="student-card" onclick="selectStudent(this, 'Daniel')">
+      <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Daniel" alt="Daniel">
+      <div class="student-name">Daniel</div>
+    </div>
+    <div class="student-card" onclick="selectStudent(this, 'Michael')">
+      <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Michael" alt="Michael">
+      <div class="student-name">Michael</div>
+    </div>
+    <div class="student-card" onclick="selectStudent(this, 'Erik S.')">
+      <img src="https://api.dicebear.com/7.x/bottts/svg?seed=ErikS" alt="Erik S.">
+      <div class="student-name">Erik S.</div>
+    </div>
+    <div class="student-card" onclick="selectStudent(this, 'Vojtěch')">
+      <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Vojtech" alt="Vojtěch">
+      <div class="student-name">Vojtěch</div>
     </div>
   </div>
 
@@ -133,7 +208,7 @@
     <input type="range" id="progressRange" min="1" max="10" value="5" oninput="updateEmoji(this.value)">
 
     <br><br>
-    <button class="btn-submit" onclick="sendData()">Uložit moji odpoveď</button>
+    <button class="btn-submit" onclick="sendData()">Uložit moji odpověď</button>
   </div>
 
   <script>
@@ -141,7 +216,7 @@
     let currentTeacherScore = "–";
     
     // VAŠE URL ADRESA Z GOOGLE APPS SCRIPTU:
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbwiSnvvYryR6exFueDasruw0babiRjFbk-ZHocwnB-E9CrTG0_3DP5GMQ_fWzUZnTZTZQ/exec';
+    const scriptURL = 'SEM_VLOZTE_VAS_ODKAZ_Z_GOOGLE';
 
     const svgs = {
       egg: `<svg viewBox="0 0 100 100"><ellipse cx="50" cy="55" rx="35" ry="42" fill="#ffeaa7" stroke="#fdcb6e" stroke-width="4"/><circle cx="38" cy="45" r="4" fill="#2d3436"/><circle cx="62" cy="45" r="4" fill="#2d3436"/><path d="M42 65 Q50 60 58 65" stroke="#2d3436" stroke-width="3" fill="none"/></svg>`,
