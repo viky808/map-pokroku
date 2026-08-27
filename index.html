@@ -218,8 +218,11 @@
 
   <script>
     let selectedStudentName = "";
+    let currentTeacherScore = "–";
+    
+    // VAŠE URL ADRESA Z GOOGLE APPS SCRIPTU:
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbwiSnvvYryR6exFueDasruw0babiRjFbk-ZHocwnB-E9CrTG0_3DP5GMQ_fWzUZnTZTZQ/exec';
 
-    // Vektorové SVG grafiky pro stupnici (fungují všude 100% spolehlivě bez písem)
     const svgs = {
       egg: `<svg viewBox="0 0 100 100"><ellipse cx="50" cy="55" rx="35" ry="42" fill="#ffeaa7" stroke="#fdcb6e" stroke-width="4"/><circle cx="38" cy="45" r="4" fill="#2d3436"/><circle cx="62" cy="45" r="4" fill="#2d3436"/><path d="M42 65 Q50 60 58 65" stroke="#2d3436" stroke-width="3" fill="none"/></svg>`,
       sprout: `<svg viewBox="0 0 100 100"><path d="M50 85 L50 45" stroke="#00b894" stroke-width="6" stroke-linecap="round"/><path d="M50 55 Q30 35 20 45 Q25 60 50 55" fill="#55efc4" stroke="#00b894" stroke-width="3"/><path d="M50 50 Q70 30 80 40 Q75 55 50 50" fill="#55efc4" stroke="#00b894" stroke-width="3"/></svg>`,
@@ -232,6 +235,14 @@
       document.querySelectorAll('.student-card').forEach(card => card.classList.remove('selected'));
       element.classList.add('selected');
       selectedStudentName = name;
+
+      // Stáhnutí hodnocení učitele z Google Tabulky
+      fetch(`${scriptURL}?name=${encodeURIComponent(name)}`)
+        .then(res => res.json())
+        .then(data => {
+          currentTeacherScore = data.teacherScore || "Nezadáno";
+        })
+        .catch(() => { currentTeacherScore = "–"; });
     }
 
     function updateEmoji(val) {
@@ -248,7 +259,7 @@
       } else if (v <= 7) {
         emojiIcon.innerHTML = svgs.plant;
         statusText.innerText = "Jde mi to dobře, občas se spletu.";
-      } else if (v <= 9) {
+      } else if (v <= 8) {
         emojiIcon.innerHTML = svgs.tree;
         statusText.innerText = "Zvládám to sám a bez chyb!";
       } else {
@@ -257,15 +268,12 @@
       }
     }
 
-function sendData() {
+    function sendData() {
       if (!selectedStudentName) {
         alert("Prosím, nejprve klikni na své jméno nahoře!");
         return;
       }
       
-      // Vložte vaši URL adresu z Google Apps Scriptu mezi uvozovky níže:
-      const scriptURL = 'https://script.google.com/macros/s/AKfycbwiSnvvYryR6exFueDasruw0babiRjFbk-ZHocwnB-E9CrTG0_3DP5GMQ_fWzUZnTZTZQ/exec';
-
       let scoreVal = document.getElementById('progressRange').value;
       let topicText = document.querySelector('.section-box h2').innerText;
 
@@ -276,21 +284,22 @@ function sendData() {
         body: JSON.stringify({
           name: selectedStudentName,
           topic: topicText,
-          score: scoreVal + '/10'
+          studentScore: scoreVal,
+          teacherScore: currentTeacherScore
         })
       })
       .then(() => {
-        alert(`Skvělé ${selectedStudentName}! Tvoje hodnocení bylo uloženo.`);
+        alert(`Skvělé ${selectedStudentName}!\n\nTvoje hodnocení: ${scoreVal}/10\nPohled učitele: ${currentTeacherScore}/10`);
         
         document.querySelectorAll('.student-card').forEach(card => card.classList.remove('selected'));
         selectedStudentName = "";
+        currentTeacherScore = "–";
         document.getElementById('progressRange').value = 5;
         updateEmoji(5);
       })
       .catch(error => alert("Chyba při odesílání: " + error));
     }
 
-    // Inicializace výchozího stavu
     updateEmoji(5);
   </script>
 </body>
